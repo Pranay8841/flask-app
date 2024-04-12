@@ -717,6 +717,61 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Function to display cart products in the UI
+  function displayCartProducts(products) {
+    // Display cart products in the UI
+    const cartProductsContainer = document.getElementById("cart-products");
+    cartProductsContainer.innerHTML = ""; // Clear existing products
+
+    products.forEach((product) => {
+      const productCard = document.createElement("div");
+      productCard.classList.add("product-card");
+
+      const productName = document.createElement("h2");
+      productName.textContent = product.name;
+
+      const productDescription = document.createElement("p");
+      productDescription.textContent = product.description;
+
+      const productPrice = document.createElement("p");
+      productPrice.textContent = `Price: $${product.price}`;
+
+      const deleteButton = document.createElement("button");
+      deleteButton.textContent = "Delete";
+      deleteButton.addEventListener("click", () => handleDelete(product._id));
+
+      productCard.appendChild(productName);
+      productCard.appendChild(productDescription);
+      productCard.appendChild(productPrice);
+      productCard.appendChild(deleteButton);
+
+      cartProductsContainer.appendChild(productCard);
+    });
+
+    // Add checkout and back buttons
+    const totalAmountContainer = document.getElementById("total-amount");
+
+    // Add checkout button
+    const checkoutButton = document.createElement("button");
+    checkoutButton.textContent = "Checkout";
+    checkoutButton.classList.add("checkout-button");
+    checkoutButton.style.fontSize = "12px"; // Smaller font size
+    checkoutButton.style.backgroundColor = "#007bff"; // Different color
+    checkoutButton.addEventListener("click", handleCheckout);
+
+    // Add back button
+    const backButton = document.createElement("button");
+    backButton.textContent = "Back";
+    backButton.classList.add("back-button");
+    backButton.style.fontSize = "12px"; // Smaller font size
+    backButton.style.backgroundColor = "#6c757d"; // Different color
+    backButton.addEventListener("click", () => {
+      window.location.href = `/?user_id=${userId}`;
+    });
+
+    // Append buttons to the total amount container
+    totalAmountContainer.appendChild(checkoutButton);
+    totalAmountContainer.appendChild(backButton);
+  }// Function to display cart products in the UI
 function displayCartProducts(products) {
   // Display cart products in the UI
   const cartProductsContainer = document.getElementById("cart-products");
@@ -733,7 +788,7 @@ function displayCartProducts(products) {
     productDescription.textContent = product.description;
 
     const productPrice = document.createElement("p");
-    productPrice.textContent = Price: $${product.price};
+    productPrice.textContent = `Price: $${product.price}`;
 
     const deleteButton = document.createElement("button");
     deleteButton.textContent = "Delete";
@@ -765,13 +820,14 @@ function displayCartProducts(products) {
   backButton.style.fontSize = "12px"; // Smaller font size
   backButton.style.backgroundColor = "#6c757d"; // Different color
   backButton.addEventListener("click", () => {
-    window.location.href = /?user_id=${userId};
+    window.location.href = `/?user_id=${userId}`;
   });
 
   // Append buttons to the total amount container
   totalAmountContainer.appendChild(checkoutButton);
   totalAmountContainer.appendChild(backButton);
 }
+
   // Function to handle the click event on the checkout button
   // Function to handle the click event on the checkout button
   async function handleCheckout() {
